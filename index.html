@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'>
+    <title>Hello World</title>
+    <style>
+      #hidden {
+        background-color: rgba(127,127,127,0.5);
+        position: absolute;
+        height: calc(100vh - 56.25vw);
+        top: 56.25vw;
+        width: 100vw;
+        left: 0px;
+      }
+      html, body {
+        background-color: white;
+        padding: 0px;
+        margin: 0px;
+      }
+      header {
+        justify-content: space-between;
+        outline: 1px solid gray;
+        align-items: center;
+        position: static;
+        display: flex;
+        height: 11vw;
+        width: 100vw;
+        left: 0px;
+        top: 0px;
+      }
+      header img {
+        margin: 0px;
+        margin-right: 1vw;
+        margin-left: 1vw;
+        margin-top: 0.5vw;
+        height: 10vw;
+        width: auto;
+      }
+      header h1 {
+        font-size: 5vw;
+        padding: 0px;
+        margin: 0px;
+        margin-top: 1.5vw;
+      }
+      nav {
+        justify-content: space-between;
+        background-color: rgb(0,0,0);
+        align-items: center;
+        display: flex;
+        width: 100vw;
+        height: 5vw;
+      }
+      nav a {
+        background-color: white;
+        text-decoration: none;
+        position: relative;
+        font-size: 1.25vw;
+        margin: 0.1vw;
+        color: black;
+        padding: 0px;
+      }
+      section {
+        display: block;
+        height: 40.25vw;
+        width: 100vw;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src='./logo.png' style='float:left'>
+      <h1>Bronco Board of Fame</h1>
+      <img src='./logo.png' style='float:right'>
+    </header>
+    <nav>
+      <a onclick='change(this);'>HOME</a>
+      <a onclick='change(this);'>BASEBALL</a>
+      <a onclick='change(this);'>BASKETBALL</a>
+      <a onclick='change(this);'>CROSSCOUNTRY</a>
+      <a onclick='change(this);'>FOOTBALL</a>
+      <a onclick='change(this);'>GOLF</a>
+      <a onclick='change(this);'>SOCCER</a>
+      <a onclick='change(this);'>SOFTBALL</a>
+      <a onclick='change(this);'>TENNIS</a>
+      <a onclick='change(this);'>TRACK</a>
+      <a onclick='change(this);'>VOLLEYBALL</a>
+      <a onclick='change(this);'>WRESTLING</a>
+    </nav>
+    <main>
+      <section id='HOME'>
+        <p>HAHAHA</p>
+      </section>
+      <section id='BASEBALL'></section>
+      <section id='BASKETBALL'></section>
+      <section id='CROSSCOUNTRY'></section>
+      <section id='FOOTBALL'></section>
+      <section id='GOLF'></section>
+      <section id='SOCCER'></section>
+      <section id='SOFTBALL'></section>
+      <section id='TENNIS'></section>
+      <section id='TRACK'></section>
+      <section id='VOLLEYBALL'></section>
+      <section id='WRESTLING'></section>
+    </main>
+    <footer></footer>
+    <div id='hidden'></div>
+  </body>
+  <script>
+    function lockScreen() {
+      document.body.requestFullscreen();
+      document.removeEventListener('click', lockScreen, false);
+    }
+    //document.addEventListener('click', lockScreen, false);
+    const sections = document.getElementsByTagName('section');
+    function change(id) {
+      console.log(id.innerHTML);
+      for (let i = 0; i < sections.length; i++) {
+        if (sections[i].id == id.innerHTML) {
+          sections[i].style.display = 'block';
+        } else {
+          sections[i].style.display = 'none';
+        }
+      }
+    }
+    change(document.getElementsByTagName('a')[0]);
+  </script>
+</html>
