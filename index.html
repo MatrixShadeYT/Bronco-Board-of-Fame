@@ -3,94 +3,8 @@
   <head>
     <meta charset='UTF-8'>
     <title>Hello World</title>
-    <style>
-      html, body {
-        background-color: white;
-        padding: 0px;
-        margin: 0px;
-      }
-      header {
-        justify-content: space-between;
-        outline: 1px solid gray;
-        align-items: center;
-        position: static;
-        display: flex;
-        height: 11vw;
-        width: 100vw;
-        left: 0px;
-        top: 0px;
-      }
-      header img {
-        margin: 0px;
-        margin-right: 1vw;
-        margin-left: 1vw;
-        margin-top: 0.5vw;
-        height: 10vw;
-        width: auto;
-      }
-      header h1 {
-        font-size: 5vw;
-        padding: 0px;
-        margin: 0px;
-        margin-top: 1.5vw;
-      }
-      nav {
-        justify-content: space-between;
-        background-color: rgb(0,0,0);
-        align-items: center;
-        display: flex;
-        width: 100vw;
-        height: 5vw;
-      }
-      nav a {
-        background-color: white;
-        text-decoration: none;
-        position: relative;
-        font-size: 1.25vw;
-        margin: 0.1vw;
-        color: black;
-        padding: 0px;
-      }
-      section {
-        display: block;
-        height: 40.25vw;
-        width: 100vw;
-      }
-      #hidden {
-        background-color: rgba(127,127,127,0.5);
-        position: absolute;
-        height: calc(100vh - 56.25vw);
-        top: 56.25vw;
-        width: 100vw;
-        left: 0px;
-      }
-      #HOMEtagline {
-        border: 0.15vw solid black;
-        background-color: green;
-        border-radius: 2.5vw;
-        height: 12.5vw;
-        width: 30vw;
-      }
-      #HOMEtagline h1 {
-        text-align: center;
-        font-size: 3vw;
-        padding: 0px;
-        margin: 0px;
-      }
-      #HOMEtagline p {
-        text-align: center;
-        font-size: 2vw;
-        padding: 0px;
-        margin: 0px;
-      }
-      #HOMEinformation {
-        border: 0.15vw solid black;
-        background-color: green;
-        border-radius: 2.5vw;
-        height: 25vw;
-        width: 30vw
-      }
-    </style>
+    <link rel='stylesheet' href='./style.css'>
+    <script src='./script.js' defer></script>
   </head>
   <body>
     <header>
@@ -128,12 +42,9 @@
           <p> The Better The View!"</p>
         </div>
         <div id="HOMEinformation">
-          <span>We Believe:</span>
-          <p>BHS Faculty and Staff believe our students are our community’s greatest resource. Every student has a valued set of abilities and skills that require development to reach their full potential. BHS Faculty and Staff are committed to each student’s success.</p>
-          <span>Our Mission:</span>
-          <p>Partnering with parents and community leaders, our mission is to identify in each student areas of improvement to foster deeper learning and areas of strengths to build confidence that prepares them for a career and college-ready future.</p>
-          <span>Our Goals:</span>
-          <p>To meet our students’ needs, BHS Faculty and Staff will develop greater leadership skills, use student-learning data to identify successes and areas of improvement, and reach out to our parents and community leaders to add strength to our educational programming for our students. </p>
+          <p><span>We Believe:</span> BHS Faculty and Staff believe our students are our community’s greatest resource. Every student has a valued set of abilities and skills that require development to reach their full potential. BHS Faculty and Staff are committed to each student’s success.</p>
+          <p><span>Our Mission:</span> Partnering with parents and community leaders, our mission is to identify in each student areas of improvement to foster deeper learning and areas of strengths to build confidence that prepares them for a career and college-ready future.</p>
+          <p><span>Our Goals:</span> To meet our students’ needs, BHS Faculty and Staff will develop greater leadership skills, use student-learning data to identify successes and areas of improvement, and reach out to our parents and community leaders to add strength to our educational programming for our students. </p>
         </div>
       </section>
       <section id='BASEBALL'></section>
@@ -151,23 +62,4 @@
     <footer></footer>
     <div id='hidden'></div>
   </body>
-  <script>
-    function lockScreen() {
-      document.body.requestFullscreen();
-      document.removeEventListener('click', lockScreen, false);
-    }
-    document.addEventListener('click', lockScreen, false);
-    const sections = document.getElementsByTagName('section');
-    function change(id) {
-      console.log(id.innerHTML);
-      for (let i = 0; i < sections.length; i++) {
-        if (sections[i].id == id.innerHTML) {
-          sections[i].style.display = 'block';
-        } else {
-          sections[i].style.display = 'none';
-        }
-      }
-    }
-    change(document.getElementsByTagName('a')[0]);
-  </script>
 </html>
