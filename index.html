@@ -4,14 +4,6 @@
     <meta charset='UTF-8'>
     <title>Hello World</title>
     <style>
-      #hidden {
-        background-color: rgba(127,127,127,0.5);
-        position: absolute;
-        height: calc(100vh - 56.25vw);
-        top: 56.25vw;
-        width: 100vw;
-        left: 0px;
-      }
       html, body {
         background-color: white;
         padding: 0px;
@@ -64,6 +56,40 @@
         height: 40.25vw;
         width: 100vw;
       }
+      #hidden {
+        background-color: rgba(127,127,127,0.5);
+        position: absolute;
+        height: calc(100vh - 56.25vw);
+        top: 56.25vw;
+        width: 100vw;
+        left: 0px;
+      }
+      #HOMEtagline {
+        border: 0.15vw solid black;
+        background-color: green;
+        border-radius: 2.5vw;
+        height: 12.5vw;
+        width: 30vw;
+      }
+      #HOMEtagline h1 {
+        text-align: center;
+        font-size: 3vw;
+        padding: 0px;
+        margin: 0px;
+      }
+      #HOMEtagline p {
+        text-align: center;
+        font-size: 2vw;
+        padding: 0px;
+        margin: 0px;
+      }
+      #HOMEinformation {
+        border: 0.15vw solid black;
+        background-color: green;
+        border-radius: 2.5vw;
+        height: 25vw;
+        width: 30vw
+      }
     </style>
   </head>
   <body>
@@ -88,7 +114,27 @@
     </nav>
     <main>
       <section id='HOME'>
-        <p>HAHAHA</p>
+        <div id="HOMEslideshow">
+          <div class="HOMEslide">
+            <img />
+            <p></p>
+          </div>
+          <div class="HOMEslide"></div>
+          <div class="HOMEslide"></div>
+        </div>
+        <div id="HOMEtagline">
+          <h1>Welcome to Blackfoot High School!</h1>
+          <p>"The Higher You Climb,</p>
+          <p> The Better The View!"</p>
+        </div>
+        <div id="HOMEinformation">
+          <span>We Believe:</span>
+          <p>BHS Faculty and Staff believe our students are our community’s greatest resource. Every student has a valued set of abilities and skills that require development to reach their full potential. BHS Faculty and Staff are committed to each student’s success.</p>
+          <span>Our Mission:</span>
+          <p>Partnering with parents and community leaders, our mission is to identify in each student areas of improvement to foster deeper learning and areas of strengths to build confidence that prepares them for a career and college-ready future.</p>
+          <span>Our Goals:</span>
+          <p>To meet our students’ needs, BHS Faculty and Staff will develop greater leadership skills, use student-learning data to identify successes and areas of improvement, and reach out to our parents and community leaders to add strength to our educational programming for our students. </p>
+        </div>
       </section>
       <section id='BASEBALL'></section>
       <section id='BASKETBALL'></section>
@@ -110,7 +156,7 @@
       document.body.requestFullscreen();
       document.removeEventListener('click', lockScreen, false);
     }
-    //document.addEventListener('click', lockScreen, false);
+    document.addEventListener('click', lockScreen, false);
     const sections = document.getElementsByTagName('section');
     function change(id) {
       console.log(id.innerHTML);
