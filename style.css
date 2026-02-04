@@ -67,11 +67,16 @@ section {
 }
 #HOMEslideshow {
   background-color: rgb(220,220,220);
+  align-items: center;
   position: absolute;
+  display: flex;
   height: 38.5vw;
   width: 70.5vw;
   left: 1vw;
   top: 17vw;
+}
+#HOMEslideshow p {
+  background-color: white;
 }
 #HOMEtagline {
   border: 0.15vw solid black;
@@ -112,7 +117,7 @@ section {
   font-weight: bold;
 }
 #HOMEinformation p {
-  font-size: 1.25vw;
+  font-size: 1.197vw;
   padding: 0px;
   margin: 0px;
 }
