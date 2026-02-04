@@ -37,10 +37,10 @@ nav {
   height: 5vw;
 }
 nav a {
-  background-color: white;
+  background-color: gray;
   text-decoration: none;
   position: relative;
-  font-size: 1.25vw;
+  font-size: 1.5vw;
   margin: 0.1vw;
   color: black;
   padding: 0px;
@@ -69,14 +69,38 @@ section {
   background-color: rgb(220,220,220);
   align-items: center;
   position: absolute;
+  overflow: hidden;
   display: flex;
   height: 38.5vw;
   width: 70.5vw;
   left: 1vw;
   top: 17vw;
 }
-#HOMEslideshow p {
-  background-color: white;
+#HOMEslideshow > p {
+  background-color: rgba(255,255,255,0.5);
+  padding: 0px;
+  padding-right: 2.5vw;
+  padding-left: 2.5vw;
+  padding-top: 8.5vw;
+  margin: 0px;
+  position: sticky;
+  font-size: 10vw;
+  height: 28vw;
+  width: 10vw;
+  top: 0vw;
+}
+#HOMEslideshow > p:hover {
+  background-color: rgba(127,127,127,0.5);
+}
+#HOMEslideshow > p:nth-child(1) {left: 1vw;}
+#HOMEslideshow > p:nth-child(2) {left: 59vw;}
+#HOMEslideshow > div {
+  background-color: green;
+  border-color: black;
+  border-style: solid;
+  padding: 0vw;
+  margin: 1vw;
+  height: 15vw;
 }
 #HOMEtagline {
   border: 0.15vw solid black;

@@ -2,7 +2,7 @@ function lockScreen() {
   document.body.requestFullscreen();
   document.removeEventListener("click", lockScreen, false);
 }
-document.addEventListener("click", lockScreen, false);
+//document.addEventListener("click", lockScreen, false);
 const sections = document.getElementsByTagName("section");
 function change(id) {
   console.log(id.innerHTML);
