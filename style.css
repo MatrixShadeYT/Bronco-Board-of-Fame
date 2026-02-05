@@ -1,5 +1,6 @@
 html, body {
   background-color: white;
+  overflow-x: hidden;
   padding: 0px;
   margin: 0px;
 }
@@ -36,7 +37,7 @@ nav {
   width: 100vw;
   height: 5vw;
 }
-nav a {
+nav p {
   background-color: gray;
   text-decoration: none;
   position: relative;
@@ -46,7 +47,7 @@ nav a {
   padding: 0px;
 }
 section {
-  display: block;
+  display: none;
   height: 40.25vw;
   width: 100vw;
 }
@@ -76,31 +77,73 @@ section {
   left: 1vw;
   top: 17vw;
 }
+#HOMEslideshow > span {
+  text-align: center;
+  font-size: 1.5vw;
+  position: sticky;
+  left: 26vw;
+  top: 36.5vw;
+}
 #HOMEslideshow > p {
   background-color: rgba(255,255,255,0.5);
   padding: 0px;
-  padding-right: 2.5vw;
-  padding-left: 2.5vw;
-  padding-top: 8.5vw;
+  padding-right: 3vw;
+  padding-left: 3vw;
+  padding-top: 17.5vw;
   margin: 0px;
   position: sticky;
   font-size: 10vw;
-  height: 28vw;
-  width: 10vw;
+  height: 30vw;
   top: 0vw;
 }
-#HOMEslideshow > p:hover {
-  background-color: rgba(127,127,127,0.5);
-}
-#HOMEslideshow > p:nth-child(1) {left: 1vw;}
-#HOMEslideshow > p:nth-child(2) {left: 59vw;}
+#HOMEslideshow > p:hover {background-color: rgba(127,127,127,0.5);}
+#HOMEslideshow > p:nth-child(3) {left: 59vw;}
+#HOMEslideshow > p:nth-child(2) {left: 0vw;}
 #HOMEslideshow > div {
+  background-color: rgba(100,100,100,0.5);
+  align-items: center;
+  position: absolute;
+  height: 38.5vw;
+  display: flex;
+  padding: 0px;
+  padding-right: 25vw;
+  padding-left: 25vw;
+  margin: 0px;
+  left: 0vw;
+  top: 0vw;
+}
+#HOMEslideshow > div > div {
   background-color: green;
   border-color: black;
   border-style: solid;
   padding: 0vw;
   margin: 1vw;
   height: 15vw;
+  width: 10vw;
+}
+#HOMEslideshow > div > div.hovering {
+  background-color: red;
+  height: 30vw;
+  width: 20vw;
+}
+#HOMEslideshow > div > div > p {
+  background-color: rgba(255,255,255,0.5);
+  position: absolute;
+  text-align: center;
+  padding: 0px;
+  padding-bottom: 0.5vw;
+  padding-right: 0.25vw;
+  padding-left: 0.25vw;
+  padding-top: 0.5vw;
+  margin: 0px;
+  height: 1.5vw;
+  width: 9.5vw;
+  top: 24.2vw;
+}
+#HOMEslideshow > div > div.hovering > p {
+  font-size: 5vw;
+  width: 20vw;
+  top: 27.5vw;
 }
 #HOMEtagline {
   border: 0.15vw solid black;
