@@ -1,75 +1,490 @@
-<!DOCTYPE html>
-<html lang='en'>
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset='UTF-8'>
-    <title>Hello World</title>
-    <link rel='stylesheet' href='./style.css'>
-    <script src='./script.js' defer></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bronco Board of Fame</title>
+    <style>
+      :root {
+        --bronco-green: #006400;
+        --bronco-gold: #ffd700;
+        --bg-light: #f4f4f4;
+      }
+
+      html,
+      body {
+        background-color: white;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        overflow-x: hidden;
+        padding: 0;
+        margin: 0;
+      }
+
+      /* Header Styling */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        outline: 1px solid #ccc;
+        height: 12vw;
+        width: 100%;
+        background: white;
+      }
+
+      header .logo-container {
+        height: 10vw;
+        width: 10vw;
+        margin: 0 2vw;
+        background-color: #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      header img {
+        height: 100%;
+        width: auto;
+      }
+
+      header h1 {
+        font-size: 5vw;
+        margin: 0;
+        color: var(--bronco-green);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Navigation Styling */
+      nav {
+        background-color: #000;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 0.5vw 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav p {
+        background-color: #333;
+        color: white;
+        font-size: 1.2vw;
+        margin: 0.2vw;
+        padding: 0.5vw 1vw;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+        text-transform: uppercase;
+      }
+
+      nav p:hover {
+        background-color: var(--bronco-green);
+        color: white;
+      }
+
+      nav p.active {
+        background-color: var(--bronco-green);
+        border-bottom: 3px solid var(--bronco-gold);
+      }
+
+      /* Main Content */
+      main {
+        min-height: 80vh;
+        padding-bottom: 50px;
+      }
+
+      section {
+        display: none;
+        width: 100%;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      #HOME {
+        display: block; /* Default visible */
+        position: relative;
+        padding-top: 2vw;
+      }
+
+      /* Slideshow Styling */
+      #HOMEslideshow {
+        background-color: #eee;
+        position: relative;
+        overflow: hidden;
+        height: 40vw;
+        width: 70vw;
+        margin-left: 2vw;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .slides-container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        padding: 0 25vw; /* Padding to center the active item */
+      }
+
+      .sport-card {
+        background-color: var(--bronco-green);
+        border: 2px solid #000;
+        margin: 0 2vw;
+        min-width: 12vw;
+        height: 18vw;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        border-radius: 8px;
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .sport-card.active {
+        min-width: 22vw;
+        height: 32vw;
+        z-index: 10;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        border-color: var(--bronco-gold);
+      }
+
+      .sport-card p {
+        background: rgba(255, 255, 255, 0.9);
+        width: 100%;
+        text-align: center;
+        padding: 1vw 0;
+        margin: 0;
+        font-weight: bold;
+        font-size: 1.2vw;
+        color: #000;
+      }
+
+      .sport-card.active p {
+        font-size: 2vw;
+        padding: 1.5vw 0;
+      }
+
+      /* Slideshow Controls */
+      .slide-btn {
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 6vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4vw;
+        cursor: pointer;
+        z-index: 20;
+        transition: background 0.3s;
+        user-select: none;
+      }
+
+      .slide-btn:hover {
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+      .btn-left {
+        left: 0;
+      }
+      .btn-right {
+        right: 0;
+      }
+
+      .credits {
+        position: absolute;
+        bottom: 1vw;
+        right: 1vw;
+        font-size: 1vw;
+        color: #666;
+      }
+
+      /* Info Sidebar */
+      .sidebar {
+        position: absolute;
+        right: 2vw;
+        top: 2vw;
+        width: 24vw;
+      }
+
+      .tagline-box {
+        border: 0.2vw solid var(--bronco-green);
+        background-color: #f9f9f9;
+        border-radius: 1.5vw;
+        padding: 1.5vw;
+        margin-bottom: 2vw;
+        text-align: center;
+      }
+
+      .tagline-box h1 {
+        font-size: 1.8vw;
+        color: var(--bronco-green);
+        margin: 0 0 0.5vw 0;
+      }
+
+      .tagline-box p {
+        font-style: italic;
+        font-size: 1.2vw;
+        margin: 0.2vw 0;
+      }
+
+      .info-box {
+        border: 0.2vw solid var(--bronco-green);
+        background-color: var(--bronco-green);
+        color: white;
+        border-radius: 1.5vw;
+        padding: 1.5vw;
+        font-size: 1vw;
+        line-height: 1.4;
+      }
+
+      .info-box span {
+        color: var(--bronco-gold);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 0.3vw;
+        font-size: 1.1vw;
+      }
+
+      .info-box p {
+        margin-bottom: 1vw;
+      }
+
+      /* Generic Content Styles */
+      .sport-content {
+        padding: 2vw;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .embed-container {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 aspect ratio */
+        background: #eee;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .embed-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
   </head>
   <body>
     <header>
-      <img src='./logo.png' style='float:left'>
+      <div class="logo-container">
+        <img src="./logo.png" />
+      </div>
       <h1>Bronco Board of Fame</h1>
-      <img src='./logo.png' style='float:right'>
+      <div class="logo-container">
+        <img src="./logo.png" />
+      </div>
     </header>
-    <nav>
-      <p>HOME</p>
-      <p>BASEBALL</p>
-      <p>BASKETBALL</p>
-      <p>CROSSCOUNTRY</p>
-      <p>FOOTBALL</p>
-      <p>GOLF</p>
-      <p>SOCCER</p>
-      <p>SOFTBALL</p>
-      <p>TENNIS</p>
-      <p>TRACK</p>
-      <p>VOLLEYBALL</p>
-      <p>WRESTLING</p>
+
+    <nav id="topNav">
+      <p onclick="showSection('HOME')">HOME</p>
+      <p onclick="showSection('BASEBALL')">BASEBALL</p>
+      <p onclick="showSection('BASKETBALL')">BASKETBALL</p>
+      <p onclick="showSection('CROSSCOUNTRY')">CROSSCOUNTRY</p>
+      <p onclick="showSection('FOOTBALL')">FOOTBALL</p>
+      <p onclick="showSection('GOLF')">GOLF</p>
+      <p onclick="showSection('SOCCER')">SOCCER</p>
+      <p onclick="showSection('SOFTBALL')">SOFTBALL</p>
+      <p onclick="showSection('TENNIS')">TENNIS</p>
+      <p onclick="showSection('TRACK')">TRACK</p>
+      <p onclick="showSection('VOLLEYBALL')">VOLLEYBALL</p>
+      <p onclick="showSection('WRESTLING')">WRESTLING</p>
     </nav>
+
     <main>
-      <section id='HOME'>
+      <!-- HOME SECTION -->
+      <section id="HOME">
         <div id="HOMEslideshow">
-          <div>
-            <div><img /><p>BASEBALL</p></div>
-            <div><img /><p>BASKETBALL</p></div>
-            <div><img /><p>CROSS-COUNTRY</p></div>
-            <div><img /><p>FOOTBALL</p></div>
-            <div><img /><p>GOLF</p></div>
-            <div><img /><p>SOCCER</p></div>
-            <div><img /><p>SOFTBALL</p></div>
-            <div><img /><p>TENNIS</p></div>
-            <div><img /><p>TRACK</p></div>
-            <div><img /><p>VOLLEYBALL</p></div>
-            <div><img /><p>WRESTLING</p></div>
+          <div class="slides-container" id="slidesContainer">
+            <div class="sport-card active" onclick="showSection('BASEBALL')">
+              <p>BASEBALL</p>
+            </div>
+            <div class="sport-card" onclick="showSection('BASKETBALL')">
+              <p>BASKETBALL</p>
+            </div>
+            <div class="sport-card" onclick="showSection('CROSSCOUNTRY')">
+              <p>CROSSCOUNTRY</p>
+            </div>
+            <div class="sport-card" onclick="showSection('FOOTBALL')">
+              <p>FOOTBALL</p>
+            </div>
+            <div class="sport-card" onclick="showSection('GOLF')">
+              <p>GOLF</p>
+            </div>
+            <div class="sport-card" onclick="showSection('SOCCER')">
+              <p>SOCCER</p>
+            </div>
+            <div class="sport-card" onclick="showSection('SOFTBALL')">
+              <p>SOFTBALL</p>
+            </div>
+            <div class="sport-card" onclick="showSection('TENNIS')">
+              <p>TENNIS</p>
+            </div>
+            <div class="sport-card" onclick="showSection('TRACK')">
+              <p>TRACK</p>
+            </div>
+            <div class="sport-card" onclick="showSection('VOLLEYBALL')">
+              <p>VOLLEYBALL</p>
+            </div>
+            <div class="sport-card" onclick="showSection('WRESTLING')">
+              <p>WRESTLING</p>
+            </div>
           </div>
-          <p onclick="HOMEslide(-1);">&lt;</p>
-          <p onclick="HOMEslide(1);">&gt;</p>
-          <span>By Japeth Steik (MatrixShadeYT)</span>
+          <div class="slide-btn btn-left" onclick="moveSlide(-1)">&lt;</div>
+          <div class="slide-btn btn-right" onclick="moveSlide(1)">&gt;</div>
+          <span class="credits">By Japeth Steik (MatrixShadeYT)</span>
         </div>
-        <div id="HOMEtagline">
-          <h1>Welcome to Blackfoot High School!</h1>
-          <p>"The Higher You Climb,</p>
-          <p> The Better The View!"</p>
-        </div>
-        <div id="HOMEinformation">
-          <p><span>We Believe:</span> BHS Faculty and Staff believe our students are our community’s greatest resource. Every student has a valued set of abilities and skills that require development to reach their full potential. BHS Faculty and Staff are committed to each student’s success.</p>
-          <p><span>Our Mission:</span> Partnering with parents and community leaders, our mission is to identify in each student areas of improvement to foster deeper learning and areas of strengths to build confidence that prepares them for a career and college-ready future.</p>
-          <p><span>Our Goals:</span> To meet our students’ needs, BHS Faculty and Staff will develop greater leadership skills, use student-learning data to identify successes and areas of improvement, and reach out to our parents and community leaders to add strength to our educational programming for our students. </p>
+
+        <div class="sidebar">
+          <div class="tagline-box">
+            <h1>Welcome to Blackfoot High School!</h1>
+            <p>"The Higher You Climb,</p>
+            <p>The Better The View!"</p>
+          </div>
+          <div class="info-box">
+            <p>
+              <span>We Believe:</span> BHS Faculty and Staff believe our
+              students are our community’s greatest resource. Every student has
+              a valued set of abilities and skills that require development to
+              reach their full potential.
+            </p>
+            <p>
+              <span>Our Mission:</span> Partnering with parents and community
+              leaders, our mission is to identify in each student areas of
+              improvement to foster deeper learning.
+            </p>
+            <p>
+              <span>Our Goals:</span> To meet our students’ needs, BHS Faculty
+              and Staff will develop greater leadership skills and use
+              student-learning data to identify successes.
+            </p>
+          </div>
         </div>
       </section>
-      <section id='BASEBALL'></section>
-      <section id='BASKETBALL'></section>
-      <section id='CROSSCOUNTRY'></section>
-      <section id='FOOTBALL'></section>
-      <section id='GOLF'></section>
-      <section id='SOCCER'></section>
-      <section id='SOFTBALL'></section>
-      <section id='TENNIS'></section>
-      <section id='TRACK'></section>
-      <section id='VOLLEYBALL'></section>
-      <section id='WRESTLING'></section>
+      <section id="BASEBALL" class="sport-content">
+        <h2>Baseball Content Coming Soon</h2>
+        
+      </section>
+      <section id="BASKETBALL" class="sport-content">
+        <h2>Basketball Content Coming Soon</h2>
+      </section>
+      <section id="CROSSCOUNTRY" class="sport-content">
+        <h2>Cross Country Content Coming Soon</h2>
+      </section>
+      <section id="FOOTBALL" class="sport-content">
+        <h2>Football Content Coming Soon</h2>
+      </section>
+      <section id="GOLF" class="sport-content">
+        <h2>Golf Content Coming Soon</h2>
+      </section>
+      <section id="SOCCER" class="sport-content">
+        <h2>Soccer Content Coming Soon</h2>
+      </section>
+      <section id="SOFTBALL" class="sport-content">
+        <h2>Softball Content Coming Soon</h2>
+      </section>
+      <section id="TENNIS" class="sport-content">
+        <h2>Tennis Content Coming Soon</h2>
+      </section>
+      <section id="TRACK" class="sport-content">
+        <h2>Track Content Coming Soon</h2>
+      </section>
+      <section id="VOLLEYBALL" class="sport-content">
+        <h2>Volleyball Content Coming Soon</h2>
+      </section>
+      <section id="WRESTLING" class="sport-content">
+        <h2>Wrestling Content Coming Soon</h2>
+      </section>
     </main>
-    <footer></footer>
-    <div id='hidden'></div>
+
+    <script>
+      const slidesContainer = document.getElementById("slidesContainer");
+      const cards = document.querySelectorAll(".sport-card");
+      const sections = document.querySelectorAll("section");
+      const navItems = document.querySelectorAll("#topNav p");
+      let currentSlideIndex = 0;
+
+      function showSection(id) {
+        // Hide all sections
+        sections.forEach((s) => (s.style.display = "none"));
+
+        // Show requested section
+        const target = document.getElementById(id);
+        if (target) {
+          target.style.display = "block";
+        }
+
+        // Update Nav visual state
+        navItems.forEach((item) => {
+          if (item.innerText === id) {
+            item.classList.add("active");
+          } else {
+            item.classList.remove("active");
+          }
+        });
+
+        // If we go back home, reset scroll
+        if (id === "HOME") {
+          updateSlidePosition();
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+
+      function moveSlide(direction) {
+        currentSlideIndex += direction;
+
+        // Boundary checks
+        if (currentSlideIndex < 0) currentSlideIndex = 0;
+        if (currentSlideIndex >= cards.length)
+          currentSlideIndex = cards.length - 1;
+
+        updateSlidePosition();
+      }
+
+      function updateSlidePosition() {
+        cards.forEach((card, index) => {
+          card.classList.toggle("active", index === currentSlideIndex);
+        });
+
+        // Calculate shift: center the active card
+        const shift = currentSlideIndex * -16;
+        slidesContainer.style.transform = `translateX(${shift}vw)`;
+      }
+
+      // Initialize
+      window.onload = () => {
+        showSection("HOME");
+        updateSlidePosition();
+      };
+    </script>
   </body>
 </html>
