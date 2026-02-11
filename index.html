@@ -15,7 +15,7 @@
       body {
         background-color: white;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        overflow-x: hidden;
+        overflow: hidden;
         padding: 0;
         margin: 0;
       }
@@ -266,30 +266,22 @@
         margin-bottom: 1vw;
       }
 
-      /* Generic Content Styles */
       .sport-content {
-        padding: 2vw;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .embed-container {
-        position: relative;
+        background-color: gray;
+        height: 75.5vh;
         width: 100%;
-        padding-top: 56.25%; /* 16:9 aspect ratio */
-        background: #eee;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       }
 
-      .embed-container iframe {
+      .sport-content iframe {
+        transform: translateX(-50%);
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
         border: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 60vh;
+        left: 50%;
+        top: 33.75vh;
       }
     </style>
   </head>
@@ -390,38 +382,83 @@
         </div>
       </section>
       <section id="BASEBALL" class="sport-content">
-        <h2>Baseball Content Coming Soon</h2>
-        
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA2C1PwBw/-iHnB2SXXrBDsZ7534dRog/view?embed"
+        >
+        </iframe>
       </section>
       <section id="BASKETBALL" class="sport-content">
-        <h2>Basketball Content Coming Soon</h2>
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8EedUGs/mjXEczy6fSR-_55lLnAOAg/view?embed"
+        >
+        </iframe>
       </section>
       <section id="CROSSCOUNTRY" class="sport-content">
-        <h2>Cross Country Content Coming Soon</h2>
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8HH4mJU/18E8SLEQzlTejwQKZ8-kNw/view?embed"
+        >
+        </iframe>
       </section>
       <section id="FOOTBALL" class="sport-content">
-        <h2>Football Content Coming Soon</h2>
+        <iframe
+          id="FOOTBALL"
+          class="sport-content"
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8Di6IN0/6ziaBcn7s0-1Z6qMVeO0gg/view?embed"
+        >
+        </iframe>
       </section>
       <section id="GOLF" class="sport-content">
-        <h2>Golf Content Coming Soon</h2>
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8AFMyTw/HunH9OgSiR9q_gqgM8pAXQ/view?embed"
+        >
+        </iframe>
       </section>
       <section id="SOCCER" class="sport-content">
-        <h2>Soccer Content Coming Soon</h2>
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8DlBpmY/IU6n03Y57hJo79358HQi_w/view?embed"
+        >
+        </iframe>
       </section>
       <section id="SOFTBALL" class="sport-content">
-        <h2>Softball Content Coming Soon</h2>
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8Jpoz5Y/sSeSrJuekZ-41Xrtss2Y4g/view?embed"
+        >
+        </iframe>
       </section>
       <section id="TENNIS" class="sport-content">
-        <h2>Tennis Content Coming Soon</h2>
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8HCxNrg/YAC9wIBV7TzFPiWzzC5htw/view?embed"
+        >
+        </iframe>
       </section>
       <section id="TRACK" class="sport-content">
-        <h2>Track Content Coming Soon</h2>
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8NM-ou4/ZHj8iJr6_1He3AWVB4SdFg/view?embed"
+        >
+        </iframe>
       </section>
       <section id="VOLLEYBALL" class="sport-content">
-        <h2>Volleyball Content Coming Soon</h2>
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8D-hziw/Xos-R0vpySrON4Bo_4BMRA/view?embed"
+        >
+        </iframe>
       </section>
       <section id="WRESTLING" class="sport-content">
-        <h2>Wrestling Content Coming Soon</h2>
+        <iframe
+          loading="lazy"
+          src="https://www.canva.com/design/DAHA8DOdVrc/DlLSQIwolrwJU5EIryjLIw/view?embed"
+        >
+        </iframe>
       </section>
     </main>
 
