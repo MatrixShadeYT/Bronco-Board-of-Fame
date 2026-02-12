@@ -72,7 +72,7 @@
       nav p {
         background-color: #333;
         color: white;
-        font-size: 1.1vw;
+        font-size: 2vw;
         margin: 0.2vw;
         padding: 0.25vw 0.5vw;
         cursor: pointer;
@@ -300,6 +300,7 @@
 
     <nav id="topNav">
       <p onclick="showSection('HOME')">HOME</p>
+      <p onclick="showSection('ESPORTS')">ESPORTS</p>
       <p onclick="showSection('BASEBALL')">BASEBALL</p>
       <p onclick="showSection('BOYSBASKETBALL')">BOYS BASKETBALL</p>
       <p onclick="showSection('GIRLSBASKETBALL')">GIRLS BASKETBALL</p>
@@ -322,6 +323,9 @@
       <section id="HOME">
         <div id="HOMEslideshow">
           <div class="slides-container" id="slidesContainer">
+            <div class="sport-card active" onclick="showSection('ESPORTS')">
+              <p>ESPORTS</p>
+            </div>
             <div class="sport-card active" onclick="showSection('BASEBALL')">
               <p>BASEBALL</p>
             </div>
@@ -399,6 +403,12 @@
           </div>
         </div>
         <div id="hider"></div>
+      </section>
+      <section id="DND" class="sport-content">
+        <p>CAN I HAVE A DND CLUB SECTION?</p>
+      </section>
+      <section id="ESPORTS" class="sport-content">
+        <p>ESPORTS SECTION COMING SOON</p>
       </section>
       <section id="BASEBALL" class="sport-content">
         <iframe
