@@ -55,6 +55,16 @@
         text-transform: uppercase;
         letter-spacing: 1px;
       }
+      
+      #credits {
+        transform: translateX(-50%);
+        justify-content: center;
+        position: absolute;
+        font-size: 1.3vw;
+        color: grey;
+        left: 50%;
+        top: 8vw;
+      }
 
       /* Navigation Styling */
       nav {
@@ -207,14 +217,6 @@
         right: 0;
       }
 
-      .credits {
-        position: absolute;
-        bottom: 1vw;
-        right: 1vw;
-        font-size: 1vw;
-        color: #666;
-      }
-
       /* Info Sidebar */
       .sidebar {
         position: absolute;
@@ -293,6 +295,7 @@
         <img src="./logo.png" />
       </div>
       <h1>Bronco Board of Fame</h1>
+      <p id="credits">By Japeth Steik (MatrixShadeYT)</p>
       <div class="logo-container">
         <img src="./logo.png" />
       </div>
@@ -378,7 +381,6 @@
           </div>
           <div class="slide-btn btn-left" onclick="moveSlide(-1)">&lt;</div>
           <div class="slide-btn btn-right" onclick="moveSlide(1)">&gt;</div>
-          <span class="credits">By Japeth Steik (MatrixShadeYT)</span>
         </div>
 
         <div class="sidebar">
