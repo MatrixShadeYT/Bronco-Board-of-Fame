@@ -583,6 +583,11 @@
         showSection("HOME");
         updateSlidePosition();
       };
+      function fullscreenPage() {
+        document.body.requestFullscreen();
+        document.body.removeEventListener('click',fullscreenPage,false);
+      }
+      document.body.addEventListener('click',fullscreenPage,false);
     </script>
   </body>
 </html>
