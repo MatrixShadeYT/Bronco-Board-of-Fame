@@ -175,18 +175,34 @@
 
       .sport-card p {
         background: rgba(255, 255, 255, 0.9);
-        width: 100%;
+        transition: all 0.5s ease;
         text-align: center;
-        padding: 1vw 0;
-        margin: 0;
         font-weight: bold;
         font-size: 1.2vw;
+        padding: 1vw 0;
         color: #000;
+        width: 100%;
+        margin: 0;
+      }
+      .sport-card img {
+        filter: grayscale(100%) contrast(100000%);
+        transform: translateX(-50%);
+        transition: all 0.5s ease;
+        position: absolute;
+        height: 16vh;
+        width: 15vw;
+        left: 50%;
+        top: 2vw;
       }
 
       .sport-card.active p {
         font-size: 2vw;
         padding: 1.5vw 0;
+      }
+      .sport-card.active img {
+        height: 27vh;
+        width: 25vw;
+        top: 4vw;
       }
 
       /* Slideshow Controls */
@@ -328,6 +344,7 @@
         <div id="HOMEslideshow">
           <div class="slides-container" id="slidesContainer">
             <div class="sport-card active" onclick="showSection('DND')">
+              <img src="./imgs/DNDlogo.png"></img>
               <p>DND</p>
             </div>
             <div class="sport-card active" onclick="showSection('ESPORTS')">
@@ -337,6 +354,7 @@
               <p>BASEBALL</p>
             </div>
             <div class="sport-card" onclick="showSection('BOYSBASKETBALL')">
+              <img src="./imgs/bblogo.png"></img>
               <p>BOYS BASKETBALL</p>
             </div>
             <div class="sport-card" onclick="showSection('GIRLSBASKETBALL')">
@@ -411,125 +429,55 @@
         <div id="hider"></div>
       </section>
       <section id="DND" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHBgFWOCJY/xJrlx-tsODX8uels8tB-Uw/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHBgFWOCJY/xJrlx-tsODX8uels8tB-Uw/view?embed"></iframe>
       </section>
       <section id="ESPORTS" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHBgHuFcEM/kMSiT09AoKQMCQVgTbmn4A/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHBgHuFcEM/kMSiT09AoKQMCQVgTbmn4A/view?embed"></iframe>
       </section>
       <section id="BASEBALL" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA2C1PwBw/-iHnB2SXXrBDsZ7534dRog/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA2C1PwBw/-iHnB2SXXrBDsZ7534dRog/view?embed"></iframe>
       </section>
       <section id="BOYSBASKETBALL" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8EedUGs/mjXEczy6fSR-_55lLnAOAg/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8EedUGs/mjXEczy6fSR-_55lLnAOAg/view?embed"></iframe>
       </section>
       <section id="GIRLSBASKETBALL" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHBC1cCYm8/4YGawA2narFtJ1K-mFjEew/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHBC1cCYm8/4YGawA2narFtJ1K-mFjEew/view?embed"></iframe>
       </section>
       <section id="CROSSCOUNTRY" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8HH4mJU/18E8SLEQzlTejwQKZ8-kNw/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8HH4mJU/18E8SLEQzlTejwQKZ8-kNw/view?embed"></iframe>
       </section>
       <section id="FOOTBALL" class="sport-content">
-        <iframe
-          id="FOOTBALL"
-          class="sport-content"
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8Di6IN0/6ziaBcn7s0-1Z6qMVeO0gg/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8Di6IN0/6ziaBcn7s0-1Z6qMVeO0gg/view?embed"></iframe>
       </section>
       <section id="GOLF" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8AFMyTw/HunH9OgSiR9q_gqgM8pAXQ/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8AFMyTw/HunH9OgSiR9q_gqgM8pAXQ/view?embed"></iframe>
       </section>
       <section id="SOCCER" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8DlBpmY/IU6n03Y57hJo79358HQi_w/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8DlBpmY/IU6n03Y57hJo79358HQi_w/view?embed"></iframe>
       </section>
       <section id="SOFTBALL" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8Jpoz5Y/sSeSrJuekZ-41Xrtss2Y4g/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8Jpoz5Y/sSeSrJuekZ-41Xrtss2Y4g/view?embed"></iframe>
       </section>
       <section id="TENNIS" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8HCxNrg/YAC9wIBV7TzFPiWzzC5htw/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8HCxNrg/YAC9wIBV7TzFPiWzzC5htw/view?embed"></iframe>
       </section>
       <section id="TRACK" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8NM-ou4/ZHj8iJr6_1He3AWVB4SdFg/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8NM-ou4/ZHj8iJr6_1He3AWVB4SdFg/view?embed"></iframe>
       </section>
       <section id="VOLLEYBALL" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8D-hziw/Xos-R0vpySrON4Bo_4BMRA/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8D-hziw/Xos-R0vpySrON4Bo_4BMRA/view?embed"></iframe>
       </section>
       <section id="WRESTLING" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHA8DOdVrc/DlLSQIwolrwJU5EIryjLIw/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHA8DOdVrc/DlLSQIwolrwJU5EIryjLIw/view?embed"></iframe>
       </section>
       <section id="CHEER" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHBCWHJYl8/FWYH8SClEq4itN3Dp90HBQ/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHBCWHJYl8/FWYH8SClEq4itN3Dp90HBQ/view?embed"></iframe>
       </section>
       <section id="DANCE" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHBCWLmkR4/94YsSe10AvLCUOU4CCuCHQ/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHBCWLmkR4/94YsSe10AvLCUOU4CCuCHQ/view?embed"></iframe>
       </section>
       <section id="WEIGHTLIFTING" class="sport-content">
-        <iframe
-          loading="lazy"
-          src="https://www.canva.com/design/DAHBCRaQTVg/Z5PkSrckxUFD9KdeZ7y9KA/view?embed"
-        >
-        </iframe>
+        <iframe src="https://www.canva.com/design/DAHBCRaQTVg/Z5PkSrckxUFD9KdeZ7y9KA/view?embed"></iframe>
       </section>
     </main>
 
@@ -597,7 +545,7 @@
         document.body.requestFullscreen();
         document.body.removeEventListener('click',fullscreenPage,false);
       }
-      document.body.addEventListener('click',fullscreenPage,false);
+      //document.body.addEventListener('click',fullscreenPage,false);
     </script>
   </body>
 </html>
