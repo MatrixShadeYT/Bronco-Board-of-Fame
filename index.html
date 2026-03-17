@@ -322,6 +322,18 @@
         left: 50%;
         top: 25.5vh;
       }
+      section .hiddenScrollControls {
+        background-color: rgba(255,0,0,0.1);
+        transform: translateX(-50%);
+        position: absolute;
+        border: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 75.5vh;
+        left: 50%;
+        top: 25.5vh
+      }
     </style>
   </head>
   <body>
@@ -371,7 +383,6 @@
             </p>
           </div>
         </div>
-        <div id="hider"></div>
       </section>
     </main>
     <script>
@@ -385,7 +396,6 @@
             "CANVA": response.table.rows[i].c[2].v
           });
         }
-        console.log(data);
         return data
       }
       class main {
@@ -399,7 +409,7 @@
               } else {
                 document.getElementById("slidesContainer").innerHTML += `<div class="sport-card" onclick="page.showSection('${this.storedData[i].NAME.replace('.','')}')"><img src="${this.storedData[i].DRIVE.replace('file/d/','thumbnail?id=').replace('/view?usp=sharing','')}"></img><p>${this.storedData[i].NAME.replace('.',' ')}</p></div>`;
               }
-              document.getElementsByTagName("main")[0].innerHTML += `<section id="${this.storedData[i].NAME.replace('.','')}" class="sport-content"><iframe loading="lazy" src="${this.storedData[i].CANVA}?embed"></iframe></div></section>`; 
+              document.getElementsByTagName("main")[0].innerHTML += `<section id="${this.storedData[i].NAME.replace('.','')}" class="sport-content"><iframe loading="lazy" src="${this.storedData[i].CANVA}?embed"></iframe><div class="hiddenScrollControls"></div></section>`;
             }
             this.cards = document.querySelectorAll(".sport-card");
             this.sections = document.querySelectorAll("section");
@@ -408,8 +418,8 @@
             window.onload = () => {
               this.showSection("HOME");
               this.updateSlidePosition();
-            };
-          });
+            }
+          })
         }
         showSection(id) {
           this.sections.forEach((s) => (s.style.display = "none"));
@@ -441,11 +451,12 @@
           this.cards.forEach((card,index) => {
             card.classList.toggle("active", index === this.currentSlideIndex);
           });
-          this.shift = this.currentSlideIndex * -16;
+          this.shift = this.currentSlideIndex * -14.25;
           slidesContainer.style.transform = `translateX(${this.shift}vw)`;
         }
       }
       const page = new main();
+      // document.addEventListener("mousedown",(e)=>{document.getElementsByTagName('title')[0].innerHTML=`${e.clientX}, ${e.clientY}`;},false);document.addEventListener('mouseup',(e)=>{})
     </script>
   </body>
 </html>
