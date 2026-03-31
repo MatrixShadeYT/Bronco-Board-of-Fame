@@ -2,38 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Bronco Board of Fame</title>
     <style>
       :root {
         --bronco-green: #006400;
         --bronco-gold: #ffd700;
         --bg-light: #f4f4f4;
+        --header-height: 12vh;
+        --nav-min-height: 50px;
       }
 
-      html,
-      body {
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background-color: white;
-        overflow: hidden;
-        padding: 0;
         margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
       }
 
-      /* Header Styling */
       header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        outline: 1px solid #ccc;
-        height: 12vw;
+        height: var(--header-height);
         width: 100%;
         background: white;
+        border-bottom: 1px solid #ccc;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 2000;
       }
 
       header .logo-container {
-        height: 10vw;
-        width: 10vw;
+        height: 80%;
+        aspect-ratio: 1/1;
         margin: 0 2vw;
         background-color: #eee;
         display: flex;
@@ -44,419 +55,543 @@
       }
 
       header img {
-        height: 100%;
+        height: 90%;
         width: auto;
       }
 
       header h1 {
-        font-size: 5vw;
+        font-size: 4vh;
         margin: 0;
         color: var(--bronco-green);
         text-transform: uppercase;
         letter-spacing: 1px;
-      }
-      
-      #credits {
-        transform: translateX(-50%);
-        justify-content: center;
-        position: absolute;
-        font-size: 1.3vw;
-        color: grey;
-        left: 50%;
-        top: 8vw;
+        text-align: center;
       }
 
-      /* Navigation Styling */
+      #credits {
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.8rem;
+        color: grey;
+        margin: 0;
+      }
+
       nav {
         background-color: #000;
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
+        align-items: center;
+        flex-wrap: wrap; 
         width: 100%;
-        padding: 0.5vw 0;
-        position: sticky;
-        top: 0;
+        padding: 5px;
+        min-height: var(--nav-min-height);
+        flex-shrink: 0;
         z-index: 1000;
+        overflow-y: auto;
+        max-height: 15vh;
       }
 
       nav p {
+        display: inline-block;
         background-color: #333;
         color: white;
-        font-size: 1.7vw;
-        margin: 0.2vw;
-        padding: 0.25vw 0.5vw;
+        font-size: 0.8rem;
+        margin: 3px;
+        padding: 6px 12px;
         cursor: pointer;
         transition: all 0.3s ease;
         border-radius: 4px;
         text-transform: uppercase;
       }
 
-      nav p:hover {
-        background-color: var(--bronco-green);
-        color: white;
-      }
-
       nav p.active {
         background-color: var(--bronco-green);
-        border-bottom: 3px solid var(--bronco-gold);
+        box-shadow: inset 0 -3px 0 var(--bronco-gold);
       }
 
-      /* Main Content */
       main {
-        min-height: 80vh;
-        padding-bottom: 50px;
+        flex-grow: 1;
+        position: relative;
+        background-color: #eee;
+        overflow: hidden;
       }
 
       section {
-        background-color: #eee;
         display: none;
         width: 100%;
-        animation: fadeIn 0.5s ease;
+        height: 100%;
+        padding: 2vh;
+        animation: fadeIn 0.4s ease;
+        position: absolute;
+        top: 0;
+        left: 0;
       }
 
       @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+        from { opacity: 0; }
+        to { opacity: 1; }
       }
 
-      #HOME {
-        display: block; /* Default visible */
-        position: relative;
-        padding-bottom: 1vw;
-        padding-top: 1vw;
+      .page-layout {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        height: 100%;
+        width: 100%;
       }
 
-      /* Slideshow Styling */
-      #HOMEslideshow {
-        background-color: #eee;
+      .content-area {
+        flex: 1;
+        background-color: #ddd;
         position: relative;
         overflow: hidden;
-        height: 33vw;
-        width: 74vw;
-        margin-left: 2vw;
-        border-radius: 10px;
+        border-radius: 15px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      }
-
-      .slides-container {
-        display: flex;
-        align-items: center;
         height: 100%;
-        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        padding: 0 25vw; /* Padding to center the active item */
       }
 
-      .sport-card {
-        background-color: var(--bronco-green);
-        border: 2px solid #000;
-        margin: 0 2vw;
-        width: 10vw;
-        height: 14vw;
-        cursor: pointer;
-        transition: all 0.5s ease;
+      #HOME .content-area {
+        flex: 3;
+      }
+
+      .sidebar {
+        flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
-        align-items: center;
-        border-radius: 8px;
-        position: relative;
-        flex-shrink: 0;
-      }
-
-      .sport-card.active {
-        width: 22vw;
-        height: 28vw;
-        z-index: 10;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        border-color: var(--bronco-gold);
-      }
-
-      .sport-card p {
-        background: rgba(255, 255, 255, 0.9);
-        transition: all 0.5s ease;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2vw;
-        padding: 1vw 0;
-        color: #000;
-        width: 100%;
-        margin: 0;
-      }
-      .sport-card img {
-        filter: grayscale(100%) contrast(100000%);
-        transform: translateX(-50%);
-        transition: all 0.5s ease;
-        position: absolute;
-        height: auto;
-        width: 12vw;
-        left: 50%;
-        top: 1vw;
-      }
-
-      .sport-card.active p {
-        font-size: 2vw;
-        padding: 1.5vw 0;
-      }
-      .sport-card.active img {
-        height: auto;
-        width: 25vw;
-        top: 2.5vw;
-      }
-
-      /* Slideshow Controls */
-      .slide-btn {
-        background-color: rgba(0, 0, 0, 0.3);
-        color: white;
-        position: absolute;
-        top: 0;
+        gap: 15px;
+        max-width: 300px;
         height: 100%;
-        width: 6vw;
+      }
+
+      .tagline-box, .info-box {
+        border: 2px solid var(--bronco-green);
+        background-color: white;
+        border-radius: 15px;
+        padding: 1.5vh;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 4vw;
-        cursor: pointer;
-        z-index: 20;
-        transition: background 0.3s;
-        user-select: none;
-      }
-
-      .slide-btn:hover {
-        background-color: rgba(0, 0, 0, 0.6);
-      }
-      .btn-left {
-        left: 0;
-      }
-      .btn-right {
-        right: 0;
-      }
-
-      /* Info Sidebar */
-      .sidebar {
-        position: absolute;
-        right: 2vw;
-        top: 1vw;
-        width: 20vw;
+        flex-direction: column;
       }
 
       .tagline-box {
-        border: 0.2vw solid var(--bronco-green);
-        background-color: #f9f9f9;
-        border-radius: 1vw;
-        padding: 0.5vw;
-        margin-bottom: 2vw;
-        text-align: center;
+        flex: 0 0 auto;
+        justify-content: center;
       }
 
-      .tagline-box h1 {
-        font-size: 1.6vw;
+      .info-box {
+        flex: 1 1 auto;
+        background-color: var(--bronco-green);
+        color: white;
+        overflow: hidden; /* Hide scrollbar */
+        justify-content: flex-start;
+        cursor: grab;
+        user-select: none;
+      }
+
+      .info-box:active {
+        cursor: grabbing;
+      }
+
+      .info-scroll-content {
+        padding-bottom: 20px;
+      }
+
+      .tagline-box h2 {
+        margin: 0;
+        font-size: 2.2vh;
         color: var(--bronco-green);
-        margin: 0 0 0.5vw 0;
       }
 
       .tagline-box p {
         font-style: italic;
-        font-size: 1.1vw;
-        margin: 0.1vw 0;
-      }
-
-      .info-box {
-        border: 0.1vw solid var(--bronco-green);
-        background-color: var(--bronco-green);
-        color: white;
-        border-radius: 1vw;
-        padding: 1vw;
-        padding-bottom: 0;
-        padding-top: 0.5vw;
-        font-size: 0.85vw;
-        line-height: 1.4;
-        width: 18vw;
-        position: absolute;
-        top: 9.5vw;
-      }
-
-      .info-box span {
-        color: var(--bronco-gold);
-        font-weight: bold;
-        display: block;
-        margin-bottom: 0.15vw;
-        font-size: 1vw;
+        font-size: 1.7vh;
+        margin: 0.5vh 0 0 0;
       }
 
       .info-box p {
-        margin-bottom: 1vw;
+        font-size: 1.6vh;
+        margin-bottom: 1.5vh;
+        line-height: 1.4;
       }
 
-      .sport-content {
-        background-color: gray;
-        height: 75.5vh;
-        width: 100%;
+      .info-box span { 
+        color: var(--bronco-gold); 
+        font-weight: bold; 
+        display: block; 
+        font-size: 1.8vh;
+        margin-bottom: 0.3vh;
       }
 
-      .sport-content iframe {
-        transform: translateX(-50%);
-        position: absolute;
-        border: none;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        height: 75.5vh;
-        left: 50%;
-        top: 25.5vh;
-        -webkit-overflow-scrolling: touch; /* Essential for mobile-style momentum */
-        touch-action: pan-y; /* Allows vertical panning */
+      /* Slideshow */
+      .slides-container {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        /* Padding removed to handle centering via JS for perfect wrap logic */
+        padding: 0; 
       }
-      .sport-content .hidememan {
-        background-color: rgba(255,0,0,0.1);
-        transform: translateX(-50%);
-        position: absolute;
-        border: none;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        height: 75.5vh;
-        left: 50%;
-        top: 25.5vh;
+
+      .sport-card {
+        background-color: var(--bronco-green);
+        margin: 0 1.5vw;
+        width: 12vw;
+        height: 18vw;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        border-radius: 12px;
+        position: relative;
+        flex-shrink: 0;
+        border: 2px solid transparent;
       }
-      section .hiddenScrollControls {
-        background-color: rgba(255,0,0,0.1);
-        transform: translateX(-50%);
-        position: absolute;
-        border: none;
-        padding: 0;
-        margin: 0;
+
+      .sport-card.active {
+        width: 22vw;
+        height: 30vw;
+        z-index: 10;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        border-color: var(--bronco-gold);
+      }
+
+      .sport-card p {
+        background: rgba(255, 255, 255, 0.95);
+        text-align: center;
+        font-weight: bold;
+        font-size: 1vw;
+        padding: 10px 0;
+        color: #000;
         width: 100%;
-        height: 75.5vh;
+        margin: 0;
+        border-radius: 0 0 10px 10px;
+      }
+
+      .sport-card.active p { font-size: 1.8vw; }
+
+      .sport-card img {
+        position: absolute;
+        top: 10%;
         left: 50%;
-        top: 25.5vh
+        transform: translateX(-50%);
+        width: 80%;
+        height: auto;
+        pointer-events: none;
+      }
+
+      .slide-btn {
+        background-color: rgba(0, 0, 0, 0.4);
+        color: white;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 60px;
+        width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 20;
+        border-radius: 50%;
+        margin: 0 10px;
+        user-select: none;
+      }
+
+      .btn-left { left: 0; }
+      .btn-right { right: 0; }
+
+      /* Sport Content */
+      .iframe-wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow-y: auto; 
+        overflow-x: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .iframe-wrapper::-webkit-scrollbar {
+        display: none;
+      }
+
+      .sport-content-section iframe {
+        width: 100%;
+        height: 500%; 
+        border: none;
+        display: block;
+      }
+
+      .scroll-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 50;
+        cursor: ns-resize;
+        background: transparent;
+      }
+
+      .scroll-overlay.disabled {
+        display: none;
+      }
+
+      .controls-container {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 100;
+      }
+
+      .ui-btn {
+        width: 50px;
+        height: 50px;
+        background: var(--bronco-gold);
+        color: var(--bronco-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 50%;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        border: none;
+        font-size: 0.7rem;
       }
     </style>
   </head>
   <body>
     <header>
-      <div class="logo-container">
-        <img src="./logo.png" />
-      </div>
+      <div class="logo-container"><img src="./logo.png" onerror="this.src='https://via.placeholder.com/100?text=BHS'" /></div>
       <h1>Bronco Board of Fame</h1>
       <p id="credits">By Japeth Steik (MatrixShadeYT)</p>
-      <div class="logo-container">
-        <img src="./logo.png" />
-      </div>
+      <div class="logo-container"><img src="./logo.png" onerror="this.src='https://via.placeholder.com/100?text=BHS'" /></div>
     </header>
+
     <nav id="topNav">
-      <p onclick="page.showSection('HOME');">HOME</p>
+      <p id="nav-HOME" onclick="page.showSection('HOME')">HOME</p>
     </nav>
-    <main>
-      <!-- HOME SECTION -->
+
+    <main id="mainContainer">
       <section id="HOME">
-        <div id="HOMEslideshow">
-          <div class="slides-container" id="slidesContainer"></div>
-          <div class="slide-btn btn-left" onclick="page.moveSlide(-1)">&lt;</div>
-          <div class="slide-btn btn-right" onclick="page.moveSlide(1)">&gt;</div>
-        </div>
-        <div class="sidebar">
-          <div class="tagline-box">
-            <h1>Welcome to Blackfoot High School!</h1>
-            <p>"The Higher You Climb,</p>
-            <p>The Better The View!"</p>
+        <div class="page-layout">
+          <div class="content-area" id="HOMEslideshow">
+            <div class="slides-container" id="slidesContainer"></div>
+            <div class="slide-btn btn-left" onclick="page.moveSlide(-1)">&lt;</div>
+            <div class="slide-btn btn-right" onclick="page.moveSlide(1)">&gt;</div>
           </div>
-          <div class="info-box">
-            <p>
-              <span>We Believe:</span> BHS Faculty and Staff believe our
-              students are our community’s greatest resource. Every student has
-              a valued set of abilities and skills that require development to
-              reach their full potential.
-            </p>
-            <p>
-              <span>Our Mission:</span> Partnering with parents and community
-              leaders, our mission is to identify in each student areas of
-              improvement to foster deeper learning.
-            </p>
-            <p>
-              <span>Our Goals:</span> To meet our students’ needs, BHS Faculty
-              and Staff will develop greater leadership skills and use
-              student-learning data to identify successes.
-            </p>
+          <div class="sidebar">
+            <div class="tagline-box">
+              <h2>Blackfoot High School</h2>
+              <p>"The Higher You Climb, The Better The View!"</p>
+            </div>
+            <div class="info-box" id="infoBoxDrag">
+              <div class="info-scroll-content">
+                <p><span>We Believe:</span> BHS Faculty and Staff believe our students are our community’s greatest resource. Every student has a valued set of abilities and skills that require development to reach their full potential. BHS Faculty and Staff are committed to each student’s success.</p>
+                <p><span>Our Mission:</span> Partnering with parents and community leaders, our mission is to identify in each student areas of improvement to foster deeper learning and areas of strengths to build confidence that prepares them for a career and college-ready future.</p>
+                <p><span>Our Goals:</span> To meet our students’ needs, BHS Faculty and Staff will develop greater leadership skills, use student-learning data to identify successes and areas of improvement, and reach out to our parents and community leaders to add strength to our educational programming for our students.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </main>
+
     <script>
       async function getData() {
-        const response = await fetch("https://docs.google.com/spreadsheets/d/1PQU8qiuZnTdwDeHCXFCLN7WNUy0e9E0q28tllnSgOpQ/gviz/tq?tqx=out:json").then(res => res.text()).then(text => JSON.parse(text.substr(47).slice(0, -2)));
-        const data = []
-        for (let i = 0; i < response.table.rows.length; i++) {
-          data.push({
-            "NAME": response.table.rows[i].c[0].v,
-            "DRIVE": response.table.rows[i].c[1].v,
-            "CANVA": response.table.rows[i].c[2].v
-          });
+        try {
+          const response = await fetch("https://docs.google.com/spreadsheets/d/1PQU8qiuZnTdwDeHCXFCLN7WNUy0e9E0q28tllnSgOpQ/gviz/tq?tqx=out:json")
+            .then(res => res.text())
+            .then(text => JSON.parse(text.substr(47).slice(0, -2)));
+          
+          return response.table.rows.map(row => ({
+            name: row.c[0]?.v || "Unknown",
+            driveId: row.c[1]?.v.match(/[-\w]{25,}/)?.[0] || "",
+            canva: row.c[2]?.v || ""
+          }));
+        } catch (e) {
+          console.error("Error loading data:", e);
+          return [];
         }
-        return data
       }
-      class main {
+
+      class App {
         constructor() {
-          getData().then((storedData) => {
-            this.storedData = storedData;
-            for (let i = 0; i < this.storedData.length; i++) {
-              document.getElementById("topNav").innerHTML += `<p onclick="page.showSection('${this.storedData[i].NAME.replace('.','')}');">${this.storedData[i].NAME.replace('.',' ')}</p>`;
-              if (i == 0) {
-                document.getElementById("slidesContainer").innerHTML += `<div class="sport-card active" onclick="page.showSection('${this.storedData[i].NAME.replace('.','')}')"><img src="${this.storedData[i].DRIVE.replace('file/d/','thumbnail?id=').replace('/view?usp=sharing','')}"></img><p>${this.storedData[i].NAME.replace('.',' ')}</p></div>`;
-              } else {
-                document.getElementById("slidesContainer").innerHTML += `<div class="sport-card" onclick="page.showSection('${this.storedData[i].NAME.replace('.','')}')"><img src="${this.storedData[i].DRIVE.replace('file/d/','thumbnail?id=').replace('/view?usp=sharing','')}"></img><p>${this.storedData[i].NAME.replace('.',' ')}</p></div>`;
-              }
-              document.getElementsByTagName("main")[0].innerHTML += `<section id="${this.storedData[i].NAME.replace('.','')}" class="sport-content"><iframe loading="lazy" src="${this.storedData[i].CANVA}?embed"></iframe><div class="hiddenScrollControls"></div></section>`;
-            }
-            this.cards = document.querySelectorAll(".sport-card");
-            this.sections = document.querySelectorAll("section");
-            this.navItems = document.querySelectorAll("#topNav p");
-            this.currentSlideIndex = 0;
-            window.onload = () => {
-              this.showSection("HOME");
-              this.updateSlidePosition();
-            }
-          })
+          this.currentSlideIndex = 0;
+          this.data = [];
+          this.isDragging = false;
+          this.startY = 0;
+          this.scrollStart = 0;
+          this.init();
         }
-        showSection(id) {
-          this.sections.forEach((s) => (s.style.display = "none"));
-          const target = document.getElementById(id);
-          if (target) {
-            target.style.display = "block";
-          }
-          this.navItems.forEach((item) => {
-            if (item.innerText === id) {
-              item.classList.add("active");
-            } else {
-              item.classList.remove("active");
-            }
+
+        async init() {
+          this.data = await getData();
+          this.renderUI();
+          this.showSection('HOME');
+          this.setupInfoBoxScrolling();
+          window.addEventListener('resize', () => this.updateSlidePosition());
+        }
+
+        renderUI() {
+          const nav = document.getElementById("topNav");
+          const slidesContainer = document.getElementById("slidesContainer");
+          const main = document.getElementById("mainContainer");
+
+          this.data.forEach((item, index) => {
+            const slug = item.name.replace(/[^a-zA-Z0-9]/g, '');
+            
+            const navBtn = document.createElement('p');
+            navBtn.id = `nav-${slug}`;
+            navBtn.innerText = item.name;
+            navBtn.onclick = () => this.showSection(slug);
+            nav.appendChild(navBtn);
+
+            const card = document.createElement('div');
+            card.className = `sport-card ${index === 0 ? 'active' : ''}`;
+            card.onclick = () => this.showSection(slug);
+            const thumbUrl = `https://drive.google.com/thumbnail?id=${item.driveId}&sz=w800`;
+            card.innerHTML = `<img src="${thumbUrl}" alt=""><p>${item.name}</p>`;
+            slidesContainer.appendChild(card);
+
+            const sec = document.createElement('section');
+            sec.id = slug;
+            sec.className = "sport-content-section";
+            sec.innerHTML = `
+              <div class="page-layout">
+                <div class="content-area">
+                  <div class="scroll-overlay" id="overlay-${slug}"></div>
+                  <div class="iframe-wrapper" id="wrapper-${slug}">
+                    <iframe loading="lazy" src="${item.canva}?embed"></iframe>
+                  </div>
+                  <div class="controls-container">
+                     <button class="ui-btn" onclick="page.toggleLock('${slug}')" id="lock-${slug}">LOCK</button>
+                     <button class="ui-btn" onclick="page.showSection('HOME')">HOME</button>
+                  </div>
+                </div>
+              </div>
+            `;
+            main.appendChild(sec);
+            this.setupSportScrolling(slug);
           });
-          if (id === "HOME") {
-            this.updateSlidePosition();
-          } else {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }
+
+          this.cards = document.querySelectorAll(".sport-card");
+          this.sections = document.querySelectorAll("main section");
+          this.navItems = document.querySelectorAll("#topNav p");
         }
+
+        setupInfoBoxScrolling() {
+          const infoBox = document.getElementById('infoBoxDrag');
+          if (!infoBox) return;
+          
+          const onStart = (e) => {
+            this.isDraggingInfo = true;
+            this.startInfoY = this.getPositionY(e);
+            this.scrollInfoStart = infoBox.scrollTop;
+          };
+
+          const onMove = (e) => {
+            if (!this.isDraggingInfo) return;
+            const currentY = this.getPositionY(e);
+            const deltaY = this.startInfoY - currentY;
+            infoBox.scrollTop = this.scrollInfoStart + deltaY;
+          };
+
+          const onEnd = () => {
+            this.isDraggingInfo = false;
+          };
+
+          infoBox.addEventListener('mousedown', onStart);
+          window.addEventListener('mousemove', onMove);
+          window.addEventListener('mouseup', onEnd);
+          
+          infoBox.addEventListener('touchstart', onStart, { passive: false });
+          window.addEventListener('touchmove', onMove, { passive: false });
+          window.addEventListener('touchend', onEnd);
+        }
+
+        setupSportScrolling(slug) {
+          const overlay = document.getElementById(`overlay-${slug}`);
+          const wrapper = document.getElementById(`wrapper-${slug}`);
+
+          const onStart = (e) => {
+            this.isDragging = true;
+            this.startY = this.getPositionY(e);
+            this.scrollStart = wrapper.scrollTop;
+          };
+
+          const onMove = (e) => {
+            if (!this.isDragging) return;
+            const currentY = this.getPositionY(e);
+            const deltaY = this.startY - currentY;
+            wrapper.scrollTop = this.scrollStart + deltaY;
+          };
+
+          const onEnd = () => {
+            this.isDragging = false;
+          };
+
+          overlay.addEventListener('mousedown', onStart);
+          window.addEventListener('mousemove', onMove);
+          window.addEventListener('mouseup', onEnd);
+          
+          overlay.addEventListener('touchstart', onStart, { passive: false });
+          window.addEventListener('touchmove', onMove, { passive: false });
+          window.addEventListener('touchend', onEnd);
+        }
+
+        toggleLock(slug) {
+          const overlay = document.getElementById(`overlay-${slug}`);
+          const btn = document.getElementById(`lock-${slug}`);
+          const isLocked = overlay.classList.toggle('disabled');
+          btn.innerText = isLocked ? "UNLOCK" : "LOCK";
+          btn.style.backgroundColor = isLocked ? "#ff4444" : "var(--bronco-gold)";
+          btn.style.color = isLocked ? "white" : "var(--bronco-green)";
+        }
+
+        getPositionY(e) { 
+          return e.type.includes('mouse') ? e.pageY : (e.touches[0] ? e.touches[0].clientY : 0); 
+        }
+
+        showSection(id) {
+          this.sections.forEach(s => s.style.display = "none");
+          const target = document.getElementById(id);
+          if (target) target.style.display = "block";
+          this.navItems.forEach(item => item.classList.toggle("active", item.id === `nav-${id}`));
+          if (id === "HOME") this.updateSlidePosition();
+        }
+
         moveSlide(direction) {
-          this.currentSlideIndex += direction;
-          if (this.currentSlideIndex < 0) this.currentSlideIndex = this.cards.length - 1;
-          if (this.currentSlideIndex >= this.cards.length) this.currentSlideIndex = 0;
+          if (!this.cards.length) return;
+          this.currentSlideIndex = (this.currentSlideIndex + direction + this.cards.length) % this.cards.length;
           this.updateSlidePosition();
         }
+
         updateSlidePosition() {
-          const slidesContainer = document.getElementById("slidesContainer");
-          this.cards.forEach((card,index) => {
-            card.classList.toggle("active", index === this.currentSlideIndex);
-          });
-          this.shift = this.currentSlideIndex * -14.25;
-          slidesContainer.style.transform = `translateX(${this.shift}vw)`;
+          const container = document.getElementById("slidesContainer");
+          const wrapper = document.getElementById("HOMEslideshow");
+          if (!container || !wrapper || !this.cards.length) return;
+
+          this.cards.forEach((c, i) => c.classList.toggle("active", i === this.currentSlideIndex));
+
+          const activeCard = this.cards[this.currentSlideIndex];
+          const wrapperCenter = wrapper.offsetWidth / 2;
+          const cardCenter = activeCard.offsetLeft + (activeCard.offsetWidth / 2);
+          
+          // Calculate the exact offset needed to center the current active card
+          const shift = wrapperCenter - cardCenter;
+          container.style.transform = `translateX(${shift}px)`;
         }
       }
-      const page = new main();
-      // document.addEventListener("mousedown",(e)=>{document.getElementsByTagName('title')[0].innerHTML=`${e.clientX}, ${e.clientY}`;},false);document.addEventListener('mouseup',(e)=>{})
+
+      const page = new App();
     </script>
   </body>
 </html>
