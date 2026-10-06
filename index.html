@@ -183,7 +183,7 @@
         flex: 1 1 auto;
         background-color: var(--bronco-green);
         color: white;
-        overflow: hidden; /* Hide scrollbar */
+        overflow: hidden;
         justify-content: flex-start;
         cursor: grab;
         user-select: none;
@@ -229,7 +229,6 @@
         align-items: center;
         height: 100%;
         transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        /* Padding removed to handle centering via JS for perfect wrap logic */
         padding: 0; 
       }
 
@@ -380,7 +379,8 @@
     </nav>
 
     <main id="mainContainer">
-      <section id="HOME">
+      <!-- HOME SECTION -->
+      <section id="HOME" style="display: block;">
         <div class="page-layout">
           <div class="content-area" id="HOMEslideshow">
             <div class="slides-container" id="slidesContainer"></div>
@@ -398,6 +398,22 @@
                 <p><span>Our Mission:</span> Partnering with parents and community leaders, our mission is to identify in each student areas of improvement to foster deeper learning and areas of strengths to build confidence that prepares them for a career and college-ready future.</p>
                 <p><span>Our Goals:</span> To meet our students’ needs, BHS Faculty and Staff will develop greater leadership skills, use student-learning data to identify successes and areas of improvement, and reach out to our parents and community leaders to add strength to our educational programming for our students.</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SINGLE REUSABLE SPORT VIEW SECTION -->
+      <section id="sport-view" class="sport-content-section">
+        <div class="page-layout">
+          <div class="content-area">
+            <div class="scroll-overlay" id="sport-overlay"></div>
+            <div class="iframe-wrapper" id="sport-wrapper">
+              <iframe id="sport-iframe" loading="lazy" src=""></iframe>
+            </div>
+            <div class="controls-container">
+               <button class="ui-btn" onclick="page.toggleLock()" id="sport-lock-btn">LOCK</button>
+               <button class="ui-btn" onclick="page.showSection('HOME')">HOME</button>
             </div>
           </div>
         </div>
@@ -426,9 +442,8 @@
         constructor() {
           this.currentSlideIndex = 0;
           this.data = [];
-          this.isDragging = false;
-          this.startY = 0;
-          this.scrollStart = 0;
+          this.currentActiveSlug = null;
+          this.isLocked = false;
           this.init();
         }
 
@@ -437,53 +452,35 @@
           this.renderUI();
           this.showSection('HOME');
           this.setupInfoBoxScrolling();
+          this.setupSingleSportScrolling();
           window.addEventListener('resize', () => this.updateSlidePosition());
         }
 
         renderUI() {
           const nav = document.getElementById("topNav");
           const slidesContainer = document.getElementById("slidesContainer");
-          const main = document.getElementById("mainContainer");
 
           this.data.forEach((item, index) => {
-            const slug = item.name.replace(/[^a-zA-Z0-9]/g, '');
+            const slug = item.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+            item.slug = slug;
             
+            // 1. Build Navigation Button
             const navBtn = document.createElement('p');
             navBtn.id = `nav-${slug}`;
             navBtn.innerText = item.name;
             navBtn.onclick = () => this.showSection(slug);
             nav.appendChild(navBtn);
 
+            // 2. Build Slide Card
             const card = document.createElement('div');
             card.className = `sport-card ${index === 0 ? 'active' : ''}`;
             card.onclick = () => this.showSection(slug);
             const thumbUrl = `https://drive.google.com/thumbnail?id=${item.driveId}&sz=w800`;
             card.innerHTML = `<img src="${thumbUrl}" alt=""><p>${item.name}</p>`;
             slidesContainer.appendChild(card);
-
-            const sec = document.createElement('section');
-            sec.id = slug;
-            sec.className = "sport-content-section";
-            sec.innerHTML = `
-              <div class="page-layout">
-                <div class="content-area">
-                  <div class="scroll-overlay" id="overlay-${slug}"></div>
-                  <div class="iframe-wrapper" id="wrapper-${slug}">
-                    <iframe loading="lazy" src="${item.canva}?embed"></iframe>
-                  </div>
-                  <div class="controls-container">
-                     <button class="ui-btn" onclick="page.toggleLock('${slug}')" id="lock-${slug}">LOCK</button>
-                     <button class="ui-btn" onclick="page.showSection('HOME')">HOME</button>
-                  </div>
-                </div>
-              </div>
-            `;
-            main.appendChild(sec);
-            this.setupSportScrolling(slug);
           });
 
           this.cards = document.querySelectorAll(".sport-card");
-          this.sections = document.querySelectorAll("main section");
           this.navItems = document.querySelectorAll("#topNav p");
         }
 
@@ -491,21 +488,25 @@
           const infoBox = document.getElementById('infoBoxDrag');
           if (!infoBox) return;
           
+          let isDraggingInfo = false;
+          let startInfoY = 0;
+          let scrollInfoStart = 0;
+
           const onStart = (e) => {
-            this.isDraggingInfo = true;
-            this.startInfoY = this.getPositionY(e);
-            this.scrollInfoStart = infoBox.scrollTop;
+            isDraggingInfo = true;
+            startInfoY = this.getPositionY(e);
+            scrollInfoStart = infoBox.scrollTop;
           };
 
           const onMove = (e) => {
-            if (!this.isDraggingInfo) return;
+            if (!isDraggingInfo) return;
             const currentY = this.getPositionY(e);
-            const deltaY = this.startInfoY - currentY;
-            infoBox.scrollTop = this.scrollInfoStart + deltaY;
+            const deltaY = startInfoY - currentY;
+            infoBox.scrollTop = scrollInfoStart + deltaY;
           };
 
           const onEnd = () => {
-            this.isDraggingInfo = false;
+            isDraggingInfo = false;
           };
 
           infoBox.addEventListener('mousedown', onStart);
@@ -517,25 +518,31 @@
           window.addEventListener('touchend', onEnd);
         }
 
-        setupSportScrolling(slug) {
-          const overlay = document.getElementById(`overlay-${slug}`);
-          const wrapper = document.getElementById(`wrapper-${slug}`);
+        setupSingleSportScrolling() {
+          const overlay = document.getElementById("sport-overlay");
+          const wrapper = document.getElementById("sport-wrapper");
+          if (!overlay || !wrapper) return;
+
+          let isDraggingSport = false;
+          let startY = 0;
+          let scrollStart = 0;
 
           const onStart = (e) => {
-            this.isDragging = true;
-            this.startY = this.getPositionY(e);
-            this.scrollStart = wrapper.scrollTop;
+            if (this.isLocked) return;
+            isDraggingSport = true;
+            startY = this.getPositionY(e);
+            scrollStart = wrapper.scrollTop;
           };
 
           const onMove = (e) => {
-            if (!this.isDragging) return;
+            if (!isDraggingSport || this.isLocked) return;
             const currentY = this.getPositionY(e);
-            const deltaY = this.startY - currentY;
-            wrapper.scrollTop = this.scrollStart + deltaY;
+            const deltaY = startY - currentY;
+            wrapper.scrollTop = scrollStart + deltaY;
           };
 
           const onEnd = () => {
-            this.isDragging = false;
+            isDraggingSport = false;
           };
 
           overlay.addEventListener('mousedown', onStart);
@@ -547,13 +554,15 @@
           window.addEventListener('touchend', onEnd);
         }
 
-        toggleLock(slug) {
-          const overlay = document.getElementById(`overlay-${slug}`);
-          const btn = document.getElementById(`lock-${slug}`);
-          const isLocked = overlay.classList.toggle('disabled');
-          btn.innerText = isLocked ? "UNLOCK" : "LOCK";
-          btn.style.backgroundColor = isLocked ? "#ff4444" : "var(--bronco-gold)";
-          btn.style.color = isLocked ? "white" : "var(--bronco-green)";
+        toggleLock() {
+          const overlay = document.getElementById("sport-overlay");
+          const btn = document.getElementById("sport-lock-btn");
+          if (!overlay || !btn) return;
+
+          this.isLocked = overlay.classList.toggle('disabled');
+          btn.innerText = this.isLocked ? "UNLOCK" : "LOCK";
+          btn.style.backgroundColor = this.isLocked ? "#ff4444" : "var(--bronco-gold)";
+          btn.style.color = this.isLocked ? "white" : "var(--bronco-green)";
         }
 
         getPositionY(e) { 
@@ -561,31 +570,70 @@
         }
 
         showSection(id) {
-          this.sections.forEach(s => s.style.display = "none");
-          const target = document.getElementById(id);
-          if (target) target.style.display = "block";
-          this.navItems.forEach(item => item.classList.toggle("active", item.id === `nav-${id}`));
-          if (id === "HOME") this.updateSlidePosition();
+          const homeSection = document.getElementById("HOME");
+          const sportSection = document.getElementById("sport-view");
+          
+          if (!homeSection || !sportSection) return;
+
+          if (id === "HOME") {
+            homeSection.style.display = "block";
+            sportSection.style.display = "none";
+            this.currentActiveSlug = null;
+            this.updateSlidePosition();
+          } else {
+            const sportData = this.data.find(item => item.slug === id);
+            if (!sportData) return;
+
+            homeSection.style.display = "none";
+            sportSection.style.display = "block";
+            this.currentActiveSlug = id;
+
+            // Properly format or handle the Canva link to prevent double query parameters
+            const iframe = document.getElementById("sport-iframe");
+            if (iframe) {
+              const cleanUrl = sportData.canva.split('?')[0];
+              iframe.src = `${cleanUrl}?embed`;
+            }
+
+            // Reset scroll position and lock state
+            const wrapper = document.getElementById("sport-wrapper");
+            if (wrapper) wrapper.scrollTop = 0;
+
+            this.isLocked = false;
+            const overlay = document.getElementById("sport-overlay");
+            const btn = document.getElementById("sport-lock-btn");
+            if (overlay && btn) {
+              overlay.classList.remove('disabled');
+              btn.innerText = "LOCK";
+              btn.style.backgroundColor = "var(--bronco-gold)";
+              btn.style.color = "var(--bronco-green)";
+            }
+          }
+
+          if (this.navItems) {
+            this.navItems.forEach(item => item.classList.toggle("active", item.id === `nav-${id}`));
+          }
         }
 
         moveSlide(direction) {
-          if (!this.cards.length) return;
+          if (!this.cards || !this.cards.length) return;
           this.currentSlideIndex = (this.currentSlideIndex + direction + this.cards.length) % this.cards.length;
-          this.updateSlidePosition();
+           this.updateSlidePosition();
         }
 
         updateSlidePosition() {
           const container = document.getElementById("slidesContainer");
           const wrapper = document.getElementById("HOMEslideshow");
-          if (!container || !wrapper || !this.cards.length) return;
+          if (!container || !wrapper || !this.cards || !this.cards.length) return;
 
           this.cards.forEach((c, i) => c.classList.toggle("active", i === this.currentSlideIndex));
 
           const activeCard = this.cards[this.currentSlideIndex];
+          if (!activeCard) return;
+
           const wrapperCenter = wrapper.offsetWidth / 2;
           const cardCenter = activeCard.offsetLeft + (activeCard.offsetWidth / 2);
           
-          // Calculate the exact offset needed to center the current active card
           const shift = wrapperCenter - cardCenter;
           container.style.transform = `translateX(${shift}px)`;
         }
