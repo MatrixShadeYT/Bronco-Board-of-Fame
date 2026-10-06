@@ -423,15 +423,28 @@
     <script>
       async function getData() {
         try {
-          const response = await fetch("https://docs.google.com/spreadsheets/d/1PQU8qiuZnTdwDeHCXFCLN7WNUy0e9E0q28tllnSgOpQ/gviz/tq?tqx=out:json")
-            .then(res => res.text())
-            .then(text => JSON.parse(text.substr(47).slice(0, -2)));
-          
-          return response.table.rows.map(row => ({
-            name: row.c[0]?.v || "Unknown",
-            driveId: row.c[1]?.v.match(/[-\w]{25,}/)?.[0] || "",
-            canva: row.c[2]?.v || ""
-          }));
+          const response = await fetch("https://docs.google.com/spreadsheets/d/162QIzEuJCXPfGft34byCEiSHMAjmHKrK1xs8a9Cq25Y/gviz/tq?tqx=out:json");
+          const text = await response.text();
+          const match = text.match(/google\.visualization\.Query\.setResponse\((.*)\);?\s*$/s);
+
+          if (!match) {
+            console.warn("Google Sheets response format changed:", text.slice(0, 200));
+            return [];
+          }
+
+          const payload = JSON.parse(match[1]);
+          return (payload.table?.rows || []).map((row) => {
+            const cells = row?.c || [];
+            const rawName = cells[0]?.v ?? "Unknown";
+            const driveValue = typeof cells[1]?.v === "string" ? cells[1].v : (cells[1]?.v ?? "");
+            const canvaValue = typeof cells[2]?.v === "string" ? cells[2].v.trim() : "";
+
+            return {
+              name: String(rawName),
+              driveId: (driveValue.match(/[-\w]{25,}/) || [""])[0],
+              canva: canvaValue
+            };
+          });
         } catch (e) {
           console.error("Error loading data:", e);
           return [];
@@ -588,11 +601,16 @@
             sportSection.style.display = "block";
             this.currentActiveSlug = id;
 
-            // Properly format or handle the Canva link to prevent double query parameters
             const iframe = document.getElementById("sport-iframe");
             if (iframe) {
-              const cleanUrl = sportData.canva.split('?')[0];
-              iframe.src = `${cleanUrl}?embed`;
+              const canvaLink = (sportData.canva || "").trim();
+              if (!canvaLink) {
+                iframe.src = "about:blank";
+              } else {
+                const cleanUrl = canvaLink.split('?')[0];
+                const separator = cleanUrl.includes('?') ? '&' : '?';
+                iframe.src = `${cleanUrl}${separator}embed`;
+              }
             }
 
             // Reset scroll position and lock state
